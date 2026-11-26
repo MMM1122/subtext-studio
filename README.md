@@ -2,6 +2,8 @@
 
 A cognitive storytelling workspace for novel writing, character psychology, nonlinear narratives, and human-AI collaborative creativity.
 
+**Live:** https://subtext-studio-ebon.vercel.app
+
 > **AI should extend human creativity, not replace human agency.**
 > Subtext Studio is an author-first, local-first writing tool, not a publishing platform or an automatic novel generator.
 
