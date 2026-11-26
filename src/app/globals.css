@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg: #f8f6f1;
+  --surface: #f0eee7;
+  --surface-2: #e8e6de;
+  --ink: #292b27;
+  --muted: #777970;
+  --line: #deddd5;
+  --accent: #87947f;
+  --accent-ink: #5f6b58;
+  --danger: #a5675c;
+  --warn: #a88a52;
+
+  /* muted category palette */
+  --c-sage: #87947f;
+  --c-clay: #b08572;
+  --c-slate: #7d8b9a;
+  --c-sand: #b4a37f;
+  --c-plum: #977f92;
+  --c-moss: #7e8a63;
+  --c-stone: #9a958a;
+  --c-teal: #6f8f8b;
+
+  --font-serif-stack: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Noto Serif SC",
+    "Source Han Serif SC", "Source Han Serif CN", "Songti SC", "STSong", "SimSun", serif;
+  --font-sans-stack: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+  --font-mono-stack: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --editor-font-size: 19px;
+  --editor-line-height: 1.9;
+  --editor-width: 720px;
+
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #171917;
+  --surface: #212420;
+  --surface-2: #2a2e29;
+  --ink: #e7e5dd;
+  --muted: #999e95;
+  --line: #343a33;
+  --accent: #a3b19a;
+  --accent-ink: #c2cdb9;
+  --danger: #c48a7f;
+  --warn: #c8a970;
+
+  --c-sage: #a3b19a;
+  --c-clay: #c39f8e;
+  --c-slate: #9aa8b6;
+  --c-sand: #c7b893;
+  --c-plum: #b29fae;
+  --c-moss: #a0ab84;
+  --c-stone: #aaa69c;
+  --c-teal: #8fb0ab;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+  --font-serif: var(--font-serif-stack);
+  --font-sans: var(--font-sans-stack);
+  --font-mono: var(--font-mono-stack);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans-stack);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* ---------- Manuscript editor ---------- */
+.manuscript {
+  font-family: var(--font-serif-stack);
+  font-size: var(--editor-font-size);
+  line-height: var(--editor-line-height);
+  color: var(--ink);
+  max-width: var(--editor-width);
+  margin: 0 auto;
+}
+
+.manuscript .ProseMirror {
+  outline: none;
+  min-height: 60vh;
+  padding-bottom: 40vh;
+  font-kerning: normal;
+  word-break: break-word;
+}
+
+.manuscript .ProseMirror p {
+  margin: 0 0 0.9em;
+}
+
+.manuscript .ProseMirror h1,
+.manuscript .ProseMirror h2,
+.manuscript .ProseMirror h3 {
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 1.6em 0 0.7em;
+  letter-spacing: 0.01em;
+}
+
+.manuscript .ProseMirror h1 {
+  font-size: 1.6em;
+}
+.manuscript .ProseMirror h2 {
+  font-size: 1.3em;
+}
+.manuscript .ProseMirror h3 {
+  font-size: 1.1em;
+}
+
+.manuscript .ProseMirror blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1em;
+  margin: 1.2em 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.manuscript .ProseMirror ul,
+.manuscript .ProseMirror ol {
+  padding-left: 1.4em;
+  margin: 0 0 0.9em;
+}
+.manuscript .ProseMirror ul {
+  list-style: disc;
+}
+.manuscript .ProseMirror ol {
+  list-style: decimal;
+}
+
+.manuscript .ProseMirror hr {
+  display: block;
+  border: none;
+  height: 1.6em;
+  overflow: visible;
+  margin: 1.6em 0;
+  background: none;
+  text-align: center;
+  line-height: 1.6em;
+}
+.manuscript .ProseMirror hr::before {
+  content: "⁂";
+  display: block;
+  color: var(--muted);
+  letter-spacing: 0.4em;
+}
+.manuscript .ProseMirror hr.ProseMirror-selectednode {
+  outline: 1px dashed var(--accent);
+}
+
+.manuscript .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--muted);
+  opacity: 0.6;
+  pointer-events: none;
+  height: 0;
+}
+
+.search-hit {
+  background: color-mix(in srgb, var(--warn) 30%, transparent);
+  border-radius: 2px;
+}
+.search-hit-current {
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 2px;
+}
+
+.serif {
+  font-family: var(--font-serif-stack);
+}
+
+/* React Flow theming */
+.react-flow {
+  --xy-background-color: transparent;
+  --xy-edge-stroke: var(--muted);
+  --xy-edge-label-background-color: var(--bg);
+  --xy-edge-label-color: var(--ink);
+  --xy-controls-button-background-color: var(--surface);
+  --xy-controls-button-background-color-hover: var(--surface-2);
+  --xy-controls-button-color: var(--ink);
+  --xy-controls-button-border-color: var(--line);
+  --xy-minimap-background-color: var(--surface);
+  --xy-handle-background-color: var(--accent);
+  --xy-handle-border-color: var(--bg);
+  --xy-attribution-background-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
