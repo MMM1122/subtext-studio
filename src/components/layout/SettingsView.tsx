@@ -67,8 +67,8 @@ export function SettingsView() {
           </div>
           <div className="rounded-md border border-line bg-surface/40 px-6 py-6">
             <div className="manuscript">
-              <p className="mb-3">雾是从海上来的，像一封没有署名的信。</p>
-              <p>The archive smelled of brass polish and old paper — a preview of your manuscript typography.</p>
+              <p className="mb-3">雨下了一整夜。第七根弦在她指下发出一声闷响——没有断，只是走了音。</p>
+              <p>The string did not break; it only went out of tune — a preview of your manuscript typography.</p>
             </div>
           </div>
           <Field label="Daily word goal" className="max-w-xs">

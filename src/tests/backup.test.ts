@@ -49,18 +49,18 @@ describe("backup & restore", () => {
     const db = getDB();
     expect(await db.chapters.where("projectId").equals(demo.project.id).count()).toBe(0);
     expect(await db.knowledge.where("projectId").equals(demo.project.id).count()).toBe(0);
-    expect(await db.chapters.where("projectId").equals(dup.projectId).count()).toBe(4);
+    expect(await db.chapters.where("projectId").equals(dup.projectId).count()).toBe(10);
   });
 
   it("exports manuscripts as markdown and text", async () => {
     const demo = buildDemoBackup();
     await insertBackup(demo);
     const md = await buildManuscript(demo.project.id, "markdown");
-    expect(md.startsWith("# 灯下时刻")).toBe(true);
-    expect(md).toContain("## 第一章");
-    expect(md).toContain("### 钟楼楼梯");
+    expect(md.startsWith("# 筝探")).toBe(true);
+    expect(md).toContain("## 第一章 断弦");
+    expect(md).toContain("### 推理板");
     const txt = await buildManuscript(demo.project.id, "text");
-    expect(txt).toContain("雾是从海上来的");
+    expect(txt).toContain("雨下了一整夜");
     expect(txt).not.toContain("##");
   });
 });
@@ -70,5 +70,35 @@ describe("demo seeding", () => {
     const { seedDemoIfNeeded } = await import("@/lib/database/seed");
     await Promise.all([seedDemoIfNeeded(), seedDemoIfNeeded(), seedDemoIfNeeded()]);
     expect(await getDB().projects.count()).toBe(1);
+  });
+
+  it("adds a newer demo once to browsers seeded with an older one, without deleting anything", async () => {
+    const { seedDemoIfNeeded } = await import("@/lib/database/seed");
+    const { makeProject, DEFAULT_SETTINGS } = await import("@/lib/repositories/factories");
+    const db = getDB();
+    await db.projects.add(makeProject({ title: "Old demo" }));
+    await db.settings.put({ ...DEFAULT_SETTINGS, demoSeeded: true });
+    await seedDemoIfNeeded();
+    await seedDemoIfNeeded();
+    const titles = (await db.projects.toArray()).map((p) => p.title).sort();
+    expect(titles).toEqual(["Old demo", "筝探"]);
+  });
+});
+
+describe("demo content", () => {
+  it("is internally consistent and demonstrates exactly one action warning", async () => {
+    const { buildDemoBackup } = await import("@/lib/database/demo");
+    const { checkCausality } = await import("@/features/narrative/logic");
+    const { checkActions, indexKnowledge } = await import("@/features/knowledge/logic");
+    const d = buildDemoBackup();
+    expect(d.chapters).toHaveLength(10);
+    const idx = new Map(d.chapters.map((c, i) => [c.id, i]));
+    const issues = checkCausality(d.events, idx);
+    expect(issues.filter((i) => i.severity !== "info")).toEqual([]);
+    expect(new Set(d.events.map((e) => e.narrativeOrder)).size).toBe(d.events.length);
+    const warnings = checkActions(d.actions, indexKnowledge(d.knowledge, idx), idx);
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0].action.description).toContain("22 点");
+    expect(validateBackup(JSON.parse(JSON.stringify(d))).ok).toBe(true);
   });
 });

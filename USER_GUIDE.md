@@ -9,7 +9,7 @@ Subtext Studio keeps your novel — and the structure beneath it — in one plac
 - Card menu (**⋯**): edit details, duplicate, export backup (.json), export manuscript (.md / .txt), archive / restore, delete (type `DELETE` to confirm; you're offered a backup first).
 - **Import backup** accepts a project backup or a whole-library export. Imports always create *new* projects; nothing existing is overwritten.
 - **Recent activity** lists the latest edited chapters/scenes across projects.
-- A demonstration project, *灯下时刻 · The Lantern Hours* (original fictional content), is added on first launch. You can add it again from Settings.
+- A demonstration project, *筝探* (original fictional content: a guzheng teacher who hears fragments of a crime scene's past and must reason them into a whole case — ten chapters, a full cast, dual timeline and knowledge matrix), is added on first launch. You can add it again from Settings. Browsers that already had an older demo receive the new one once; nothing existing is removed.
 
 ## Workspace layout
 

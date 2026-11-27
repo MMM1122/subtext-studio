@@ -22,7 +22,7 @@ Tests live in `src/tests/` and run real repositories against an in-memory Indexe
 | `narrative.test.ts` | Independent chronological vs narrative reordering; causes-after-effects and cycle detection; dangling cause cleanup on delete; flashback / flash-forward classification; nonlinearity |
 | `backup.test.ts` | Export → JSON → import round trip creates a new, fully re-keyed project with internally consistent references; invalid and future-schema backups rejected; duplicate & cascade delete; Markdown / text manuscript export; demo seeding is idempotent under concurrent calls |
 
-**Result (this build):** 5 files, 22 tests, all passing.
+**Result (this build):** 5 files, 24 tests, all passing (incl. demo-content consistency and demo upgrade seeding).
 
 ## End-to-end workflows (Playwright)
 

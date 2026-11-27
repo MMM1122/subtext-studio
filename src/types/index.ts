@@ -271,6 +271,8 @@ export interface UserSettings {
   /** Explicit consent to send manuscript excerpts to the configured AI provider. */
   aiConsent: boolean;
   demoSeeded: boolean;
+  /** Version of the demo project last added to this browser. */
+  demoVersion?: number;
   updatedAt: number;
 }
 
